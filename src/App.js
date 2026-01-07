@@ -1,15 +1,15 @@
 
-// import About from './components/About';
+import About from './components/About';
 import React,{ useState } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import TextForm from './components/TextForm';
 import Alert from './components/Alert';
-// import {
-//   BrowserRouter as Router,
-//   Route,
-//   Routes
-// } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes
+} from "react-router-dom";
 
 function App() 
 {
@@ -25,13 +25,24 @@ function App()
       setAlert(null);
     }, 2000);
   }
-  const toggleMode = ()=>{
+  const removeBackgroundClasses=()=>{
+    document.body.classList.remove('bg-light')
+    document.body.classList.remove('bg-dark')
+    document.body.classList.remove('bg-success')
+    document.body.classList.remove('bg-warning')
+    document.body.classList.remove('bg-danger')
+  }
+  const toggleMode = (cls)=>{
+   removeBackgroundClasses();
+   console.log(cls);
+    document.body.classList.add('bg-'+cls)
+
     if(mode === "light")
     {
       setMode("dark");
       document.body.style.backgroundColor ="#042743";
       showAlert("Dark mode enabled","success");
-      document.title = "TextUtils-Dark";
+      // document.title = "TextUtils-Dark";
       // setInterval(()=> {
       //   document.title = "TextUtils-Dark";
       // }, 1500);
@@ -43,7 +54,7 @@ function App()
       setMode("light");
       document.body.style.backgroundColor = "white";
       showAlert("Light mode enabled","success");
-      document.title = "TextUtils-Light";
+      // document.title = "TextUtils-Light";
     }
 
     textColor();
@@ -77,20 +88,20 @@ function App()
   }
   return (
     <>
-    {/* <Router> */}
-<Navbar title="Utility" mode={mode} toggleMode={toggleMode} pinkMode={pinkMode}/>
+  <Router>
+<Navbar title="Utility" tis="about" mode={mode} toggleMode={toggleMode} pinkMode={pinkMode}/>
 <Alert alert={alert}/>
 <div className="container mp-3">
  
 
-{/* <Routes> */}
-          {/* <Route exact path="/about" element={<About />}/> */}
-          {/* <Route exact path="/" element={<TextForm showAlert={showAlert} heading="Enter text" mode={mode} textColor = {textColor}/>}/> */}
-          <TextForm showAlert={showAlert} heading="Enter text" mode={mode} textColor = {textColor}/>
-{/* </Routes> */}
+<Routes>
+          <Route exact path="/about" element={<About mode={mode}/>}/>
+          <Route exact path="/" element={<TextForm showAlert={showAlert} heading="Try TextUtils- word counter, character counter" mode={mode} textColor = {textColor}/>}/>
+          {/* <TextForm showAlert={showAlert} heading="Enter text" mode={mode} textColor = {textColor}/> */}
+</Routes>
 
 </div>
-{/* </Router> */}
+</Router>
  </>);
     
 }

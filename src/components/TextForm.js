@@ -26,10 +26,12 @@ const handleClick=()=>{
 setText(newText);
 }
  const handleCopy=()=>{
-  var text = document.getElementById("mybox");
-        text.select();
+  // var text = document.getElementById("mybox");
+  //       text.select();
         // text.setSelectionRange(0,9999);
-        navigator.clipboard.writeText(text.value);
+        navigator.clipboard.writeText(text);
+        // document.getSelection().removeAllRanges();
+        // to deselct copied text after copying
         props.showAlert("copied to clipboard", "success");
  }
 
@@ -40,22 +42,21 @@ setText(newText);
   return (
     <>
 <div className={`container mb-3 text-${props.mode ==='light'?'dark':'light'}`}>
-<h1>{props.heading}</h1>
+<h1 className='mb-4'>{props.heading}</h1>
 <div className="container mb-3" >
 <label htmlFor="mybox" className="form-label" >Text area</label>
-<textarea className={`form-control text-${props.mode === 'light'?'dark':'light'}`} id="mybox" style={{backgroundColor :props.mode==='light'?'white':'grey', Color:props.mode==='light'?'black':'white'}} onChange={handleOnChange} value={text} rows="8"></textarea>
+<textarea className={`form-control text-${props.mode === 'light'?'dark':'light'}`} id="mybox" style={{backgroundColor :props.mode==='light'?'white':'#13466e', Color:props.mode==='light'?'#042743':'white'}} onChange={handleOnChange} value={text} rows="8"></textarea>
 </div>
-<button className="btn btn-primary mx-2" onClick={handleUpClick}>UPPERCASE</button>
-<button className="btn btn-primary mx-2" onClick={handleLoClick}>LOWERCASE</button>
-<button className="btn btn-primary mx-2" onClick={handleclearClick}>Clear</button>
-<button className="btn btn-primary mx-2" onClick={handleClick}> Add @gmail.com </button>
-<button className="btn btn-primary mx-2" onClick={handleCopy}>Copy</button>
-<button className="btn btn-primary mx-2" onClick={handleSpace}>Remove Extra Space</button>
+<button disabled={text.length === 0} className="btn btn-primary mx-2 my-2" onClick={handleUpClick}>UPPERCASE</button>
+<button disabled={text.length === 0} className="btn btn-primary mx-2 my-2" onClick={handleLoClick}>LOWERCASE</button>
+<button disabled={text.length === 0} className="btn btn-primary mx-2 my-2" onClick={handleclearClick}>Clear</button>
+<button disabled={text.length === 0} className="btn btn-primary mx-2 my-2" onClick={handleClick}> Add @gmail.com </button>
+<button disabled={text.length === 0} className="btn btn-primary mx-2 my-2" onClick={handleCopy}>Copy</button>
+<button disabled={text.length === 0} className="btn btn-primary mx-2 my-2" onClick={handleSpace}>Remove Extra Space</button>
 </div>
 <div className={`container mb-3 text-${props.mode ==='light'?'dark':'light'}`}>
   <h2>Your Text Contains </h2> 
-  <p> char {text.length} words are {text.split(" ").length-1}</p>
-  <p> minutes to read {0.008 * (text.split(" ").length-1)}</p>
+  <p> char {text.length} words are {text.split(/\s+/).filter((ele)=>{ return ele.length!==0}).length}</p>
   <h2>PREVIEW </h2>
   <p> {text.length>0?text:"Enter something for Preview"}</p> 
 </div>
