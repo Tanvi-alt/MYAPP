@@ -112,3 +112,6 @@ export default App;
 
 // switch component doesnt exist so use routes intstead but syntax of swiytch use routes to enclose
 // and use route like this   <Route exact path="/about" element={<About />}/>
+
+
+//commit
